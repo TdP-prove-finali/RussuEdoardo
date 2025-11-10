@@ -27,25 +27,25 @@ class Model:
             self._grafo.add_edge(
                 self._idMap[int(edge.codice1)],
                 self._idMap[int(edge.codice2)],
-                weight=edge.distanza_km
+                weight=edge.distanza
             )
         return self._grafo
 
     def calcolaPunteggio(self, comuni):
-        self._min_elettori = min(c.elettori for c in comuni)
-        self._max_elettori = max(c.elettori for c in comuni)
-        self._min_affluenza = min(c.affluenza for c in comuni)
-        self._max_affluenza = max(c.affluenza for c in comuni)
+        self._minElettori = min(c.elettori for c in comuni)
+        self._maxElettori = max(c.elettori for c in comuni)
+        self._minAffluenza = min(c.affluenza for c in comuni)
+        self._maxAffluenza = max(c.affluenza for c in comuni)
 
         for comune in comuni:
-            self._norma_elettori = ((comune.elettori - self._min_elettori) /
-                                    (self._max_elettori - self._min_elettori))
-            self._norma_affluenza = 1 - ((comune.affluenza - self._min_affluenza) /
-                                         (self._max_affluenza - self._min_affluenza))
+            self._normaElettori = ((comune.elettori - self._minElettori) /
+                                    (self._maxElettori - self._minElettori))
+            self._normaAffluenza = 1 - ((comune.affluenza - self._minAffluenza) /
+                                         (self._maxAffluenza - self._minAffluenza))
             # Ho cambiato le proporzioni da 60-40 a 70-30 per rendere
             # il punteggio più affine alla realtà
-            media_pesata = (0.7 * self._norma_elettori) + (0.3 * self._norma_affluenza)
-            comune.punteggio = round(media_pesata * 10, 2)
+            media = (0.7 * self._normaElettori) + (0.3 * self._normaAffluenza)
+            comune.punteggio = round(media * 10, 2)
         return
 
     def trovaPercorso(self, partenza, giorniMax, nTappe):

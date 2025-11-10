@@ -5,4 +5,4 @@ class Arco:
     comune1: str
     codice2:int
     comune2: str
-    distanza_km :float
+    distanza :float

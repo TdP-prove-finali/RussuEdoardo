@@ -61,6 +61,7 @@ class Controller:
         tappe = self._view._NTappe.value
 
         self._view.lv2.controls.clear()
+        self._view.update_page()
 
         if not partenza or not giorni or not tappe:
             self._view.lv2.controls.append(
@@ -105,7 +106,7 @@ class Controller:
             if i < len(percorso) - 1:
                 prossimo = percorso[i + 1]
                 distanza = float(grafo[comune][prossimo].get("weight", 0.0))
-                tempo_percorrenza = distanza / self._model.getVelocitaMedia(distanza)
+                tempoPercorrenza = distanza / self._model.getVelocitaMedia(distanza)
                 self._view.lv2.controls.append(
                     ft.Row([
                         ft.Text(comune.nome, color="blue"),
@@ -113,14 +114,14 @@ class Controller:
                         ft.Text(prossimo.nome, color="blue"),
                         ft.Text(f": {distanza:.2f} km"),
                         ft.Text(f" → ", weight = "bold"),
-                        ft.Text(f"{tempo_percorrenza:.2f} h")
+                        ft.Text(f"{tempoPercorrenza:.2f} h")
                     ])
                 )
         self._view.lv2.controls.append(
             ft.Text(f"\nPunteggio ottenuto: {punteggio:.2f}", weight="bold", color="black")
         )
-        tempo_totale = self._model.calcolaTempo(percorso)
+        tempoTotale = self._model.calcolaTempo(percorso)
         self._view.lv2.controls.append(
-            ft.Text(f"Tempo utilizzato: {tempo_totale:.2f} h", weight="bold", color="black")
+            ft.Text(f"Tempo utilizzato: {tempoTotale:.2f} h", weight="bold", color="black")
         )
         self._view.update_page()

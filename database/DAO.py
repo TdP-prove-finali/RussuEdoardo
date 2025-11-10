@@ -37,7 +37,7 @@ class DAO():
                     POW(SIN(RADIANS(c2.latitudine - c1.latitudine) / 2), 2) +
                     COS(RADIANS(c1.latitudine)) *
                     COS(RADIANS(c2.latitudine)) *
-                    POW(SIN(RADIANS(c2.longitudine - c1.longitudine) / 2), 2))) AS distanza_km
+                    POW(SIN(RADIANS(c2.longitudine - c1.longitudine) / 2), 2))) AS distanza
                     FROM comuni_geocoded AS c1
                     JOIN comuni_geocoded AS c2
                     ON c1.codiceComune > c2.codiceComune

@@ -1,4 +1,6 @@
 import copy
+import time
+
 import networkx as nx
 from database.DAO import DAO
 
@@ -51,16 +53,17 @@ class Model:
     def trovaPercorso(self, partenza, giorniMax, nTappe):
         self._percorsoOttimo = []
         self._punteggioMax = 0
+        start = time.time()
         nodo = self._idMap[int(partenza)]
         parziale = [nodo]
         giorniUtilizzati = 1
         oreUtilizzate = self._tempoSosta
         self.ricorsione(parziale, giorniUtilizzati, oreUtilizzate, giorniMax, nTappe)
-
+        end = time.time()
+        print(end - start)
         return self._percorsoOttimo, self._punteggioMax
 
     def ricorsione(self, parziale, giorniUtilizzati, oreUtilizzate, giorniMax, tappe):
-        # se ho raggiunto le tappe massime mi fermo e aggiorno il punteggio
         if len(parziale) == tappe:
             if self.calcolaPeso(parziale) > self._punteggioMax:
                 self._punteggioMax = self.calcolaPeso(parziale)
@@ -71,7 +74,6 @@ class Model:
                 self._percorsoOttimo = copy.deepcopy(parziale)
                 self._tempoMin = self.calcolaTempo(parziale)
             return
-
         ultimo = parziale[-1]
         for nodo in self._grafo.nodes:
             if nodo in parziale:

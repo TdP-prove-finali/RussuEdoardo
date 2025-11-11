@@ -53,14 +53,11 @@ class Model:
     def trovaPercorso(self, partenza, giorniMax, nTappe):
         self._percorsoOttimo = []
         self._punteggioMax = 0
-        start = time.time()
         nodo = self._idMap[int(partenza)]
         parziale = [nodo]
         giorniUtilizzati = 1
         oreUtilizzate = self._tempoSosta
         self.ricorsione(parziale, giorniUtilizzati, oreUtilizzate, giorniMax, nTappe)
-        end = time.time()
-        print(end - start)
         return self._percorsoOttimo, self._punteggioMax
 
     def ricorsione(self, parziale, giorniUtilizzati, oreUtilizzate, giorniMax, tappe):
